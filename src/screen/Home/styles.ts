@@ -5,7 +5,7 @@ import colors from "../../utils/colors";
 export const ContainerScreen = styled.View`
   align-items: center;
   height: 100%;
-  padding: 5% 4% 0 4%;
+  padding: 6% 4% 0 4%;
   background-color: ${colors.white};
 `;
 
@@ -13,7 +13,6 @@ export const TitleGraphic = styled.Text`
   font-size: 18px;;
   font-family: ${fonts.semiBold};
   color: ${colors.blackLight};
-  margin-bottom: 16px;
   width: 100%;
   text-align: left;
 `;
@@ -28,6 +27,14 @@ export const TextLoading = styled.Text`
 export const ContainerGraphic = styled.View`
   width: 100%;
   min-height: 270px;
+  margin-bottom: 20px;
   align-items: center;
   justify-content: center;
+`;
+
+export const ContainerInfoDetails = styled.View`
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
 `;
