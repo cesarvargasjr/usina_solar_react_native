@@ -19,11 +19,8 @@ export const Home = () => {
 
   return (
     <S.ContainerScreen>
-      <S.Title>Gerenciamento de energia solar</S.Title>
       <S.ContainerGraphic>
-        <S.TitleGraphic>
-          Total de energia gerada até agora (Hoje):
-        </S.TitleGraphic>
+        <S.TitleGraphic>Total de energia gerada no dia de hoje:</S.TitleGraphic>
         {!data ? (
           <>
             <ActivityIndicator />

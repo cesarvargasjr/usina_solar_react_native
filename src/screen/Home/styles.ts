@@ -5,20 +5,14 @@ import colors from "../../utils/colors";
 export const ContainerScreen = styled.View`
   align-items: center;
   height: 100%;
-  padding: 22% 4% 0 4%;
+  padding: 5% 4% 0 4%;
   background-color: ${colors.white};
 `;
 
-export const Title = styled.Text`
-  font-size: 22px;
-  font-family: ${fonts.bold};
-`;
-
 export const TitleGraphic = styled.Text`
-  font-size: 16px;;
+  font-size: 18px;;
   font-family: ${fonts.semiBold};
   color: ${colors.blackLight};
-  margin-top: 30px;
   margin-bottom: 16px;
   width: 100%;
   text-align: left;
