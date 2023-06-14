@@ -8,6 +8,8 @@ import co2 from "../../assets/svgs/co2.svg";
 import kwh from "../../assets/svgs/kwh.svg";
 import tree from "../../assets/svgs/tree.svg";
 import * as S from "./styles";
+import { VictoryChart, VictoryLine, VictoryTheme } from "victory-native";
+import colors from "../../utils/colors";
 
 export const Home = () => {
   const [data, setData] = useState<DataProps>();
@@ -21,7 +23,12 @@ export const Home = () => {
     handleDataGraphic();
   }, []);
 
-  console.log("========", data);
+  console.log("========", data?.data?.generation);
+  const generation5 = data?.data?.generation[0];
+  const generation8 = data?.data?.generation[3];
+  const generation11 = data?.data?.generation[6];
+  const generation14 = data?.data?.generation[9];
+  const generation17 = data?.data?.generation[12];
 
   return (
     <S.ContainerScreen>
@@ -53,6 +60,28 @@ export const Home = () => {
           description="Kwh"
         />
       </S.ContainerInfoDetails>
+      {!data ? (
+        <>
+          <ActivityIndicator />
+          <S.TextLoading>Carregando gráfico</S.TextLoading>
+        </>
+      ) : (
+        <VictoryChart theme={VictoryTheme.material}>
+          <VictoryLine
+            style={{
+              data: { stroke: colors.green },
+              // parent: { border: "1px solid #c43a31" },
+            }}
+            data={[
+              { x: "5:00", y: generation5 },
+              { x: "8:00", y: generation8 },
+              { x: "11:00", y: generation11 },
+              { x: "14:00", y: generation14 },
+              { x: "17:00", y: generation17 },
+            ]}
+          />
+        </VictoryChart>
+      )}
     </S.ContainerScreen>
   );
 };

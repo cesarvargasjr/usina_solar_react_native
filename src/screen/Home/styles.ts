@@ -2,8 +2,7 @@ import styled from "styled-components/native";
 import fonts from "../../utils/fonts";
 import colors from "../../utils/colors";
 
-export const ContainerScreen = styled.View`
-  align-items: center;
+export const ContainerScreen = styled.ScrollView`
   height: 100%;
   padding: 6% 4% 0 4%;
   background-color: ${colors.white};
