@@ -12,6 +12,7 @@ import {
 
 // Ignore all warnings
 LogBox.ignoreAllLogs(true);
+LogBox.ignoreLogs(["Require cycle: node_modules/victory"]);
 
 export default function App() {
   const [fontsLoaded] = useFonts({
