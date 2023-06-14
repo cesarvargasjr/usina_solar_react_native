@@ -1,6 +1,9 @@
 import React from "react";
-import { Home } from "./src/screen/Home";
+import AppRoutes from "./src/routes/app.routes";
 import { LogBox } from "react-native";
+import { StatusBar } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { NativeBaseProvider } from "native-base";
 
 import {
   Roboto_400Regular,
@@ -12,6 +15,7 @@ import {
 
 // Ignore all warnings
 LogBox.ignoreAllLogs(true);
+LogBox.ignoreLogs(["Require cycle: node_modules/victory"]);
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -25,5 +29,12 @@ export default function App() {
     return null;
   }
 
-  return <Home />;
+  return (
+    <NavigationContainer>
+      <NativeBaseProvider>
+        <StatusBar barStyle="dark-content" />
+        <AppRoutes />
+      </NativeBaseProvider>
+    </NavigationContainer>
+  );
 }
