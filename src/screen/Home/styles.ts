@@ -70,49 +70,41 @@ export const Background = styled.View`
   position: absolute;
 `;
 
-export const ContainerDropDown = styled.ScrollView`
-  /* position: absolute; */
-  min-width: 150px;
-  max-height: 140px;
-  border-radius: 12px;
-  padding: 20px 20px 0 20px;
-  /* top: 705px; */
-  /* left: 188px; */
-  /* z-index: 999999999; */
-  flex-direction: column;
-  background-color:  ${colors.greenLight};
-`;
 
-export const Option = styled.Text`
-  color: ${colors.blackLight};
-  font-size: 18px;
-  font-family: ${fonts.semiBold};
-  width: 100%;
-  margin-bottom: 20px;
-`;
+
+
 
 export const TextButton = styled.Text`
-  color: ${colors.white};
-  font-size: 18px;
-  font-family: ${fonts.extraBold};
+  color: ${colors.green};
+  font-size: 21px;
+  font-family: ${fonts.semiBold};
   width: 100%;
   text-align: center;
 `;
 
-export const Button = styled.TouchableOpacity`
-  /* border: 3px solid ${colors.green}; */
-  background-color: ${colors.green};
-  padding: 4px;
-  border-radius: 50px;
+export const ButtonGraphicLine = styled.TouchableOpacity<{ border: boolean }>`
+  border-bottom-width: 2px solid;
+  border-color: ${({ border }) => border ? colors.white : colors.green};
+  padding-bottom: 4px;
   width: 100px;
   align-items: center;
   justify-content: center;
-  margin-left: 10px;
 `;
 
-export const ContainerOption = styled.View`
-  width: 100%;
-  flex-direction: row;
+export const ButtonGraphicBar = styled.TouchableOpacity<{ border: boolean }>`
+  border-bottom-width: 2px solid;
+  border-color: ${({ border }) => border ? colors.green : colors.white};
+  padding-bottom: 4px;
+  width: 100px;
   align-items: center;
-  margin-bottom: 20px;
+  justify-content: center;
+`;
+
+export const ContainerTabs = styled.View`
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 15px;
 `;

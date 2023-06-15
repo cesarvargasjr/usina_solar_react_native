@@ -18,7 +18,7 @@ export const Graphic = (props: GraphicProps) => {
               data: { stroke: colors.green, strokeWidth: 6 },
             }}
             animate={{
-              duration: 1500,
+              duration: 1000,
               easing: "linear",
             }}
             data={props?.dataGraphic}
@@ -29,7 +29,7 @@ export const Graphic = (props: GraphicProps) => {
           <VictoryBar
             data={props?.dataGraphic}
             animate={{
-              duration: 1500,
+              duration: 1000,
               easing: "linear",
             }}
             style={{

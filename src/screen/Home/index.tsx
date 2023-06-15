@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getSolarPlant } from "../../services/solarPlant";
-import { ActivityIndicator, TouchableOpacity } from "react-native";
+import { ActivityIndicator } from "react-native";
 import { CircleGraphic } from "../../components/CircleGraphic";
 import { DataProps } from "./interface";
 import { InfoDetails } from "../../components/InfoDetails";
@@ -12,11 +12,19 @@ import * as S from "./styles";
 
 export const Home = () => {
   const [data, setData] = useState<DataProps>();
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [showGraphic, setShowGraphic] = useState(false);
 
   const handleDataGraphic = async () => {
     const response = await getSolarPlant("hourly");
     setData(response);
+  };
+
+  const RenderGraphic = () => {
+    if (!showGraphic) {
+      return <Graphic type="line" dataGraphic={dataGraphic} />;
+    } else {
+      return <Graphic type="bar" dataGraphic={dataGraphic} />;
+    }
   };
 
   useEffect(() => {
@@ -31,14 +39,8 @@ export const Home = () => {
     { x: "17:00", y: data?.data?.generation[12] },
   ];
 
-  // console.log("========", data?.data);
-
   return (
     <>
-      {showDropdown && (
-        <S.Background onTouchEnd={() => setShowDropdown(false)} />
-      )}
-
       <S.ContainerScreen>
         <S.TitleGraphic>Energia gerada no dia de hoje:</S.TitleGraphic>
         <S.Container>
@@ -78,22 +80,21 @@ export const Home = () => {
             description="Kwh"
           />
         </S.ContainerInfoDetails>
-        <S.ContainerOption>
-          <S.TitleGraphic>Gráfico em horas:</S.TitleGraphic>
-          <S.Button onPress={() => setShowDropdown(true)}>
-            <S.TextButton>Opções</S.TextButton>
-          </S.Button>
-          {showDropdown && (
-            <S.ContainerDropDown>
-              {/* {optionsCity?.map((item: string, i: number) => ( */}
-              <TouchableOpacity>
-                <S.Option>Linha</S.Option>
-                <S.Option>Barras</S.Option>
-              </TouchableOpacity>
-              {/* ))} */}
-            </S.ContainerDropDown>
-          )}
-        </S.ContainerOption>
+        <S.TitleGraphic>Desempenho em horas:</S.TitleGraphic>
+        <S.ContainerTabs>
+          <S.ButtonGraphicLine
+            onPress={() => setShowGraphic(false)}
+            border={showGraphic}
+          >
+            <S.TextButton>Linhas</S.TextButton>
+          </S.ButtonGraphicLine>
+          <S.ButtonGraphicBar
+            onPress={() => setShowGraphic(true)}
+            border={showGraphic}
+          >
+            <S.TextButton>Barras</S.TextButton>
+          </S.ButtonGraphicBar>
+        </S.ContainerTabs>
         <S.ContainerGraphicLine>
           {!data ? (
             <>
@@ -101,13 +102,9 @@ export const Home = () => {
               <S.TextLoading>Carregando gráfico</S.TextLoading>
             </>
           ) : (
-            // <Graphic type="bar" dataGraphic={dataGraphic} />
-            <Graphic type="line" dataGraphic={dataGraphic} />
+            <RenderGraphic />
           )}
         </S.ContainerGraphicLine>
-        {/* <S.ContainerGraphicLine>
-        <Graphic type="bar" dataGraphic={dataGraphic} />
-      </S.ContainerGraphicLine> */}
       </S.ContainerScreen>
     </>
   );
