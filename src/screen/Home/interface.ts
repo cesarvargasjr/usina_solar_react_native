@@ -2,7 +2,7 @@ export interface DataProps {
   data: {
     data_type: string;
     expected: [];
-    generation: [];
+    generation: any;
     totals: {
       co2: number;
       kwh: number;
