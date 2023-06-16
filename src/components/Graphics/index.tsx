@@ -7,6 +7,7 @@ import {
   VictoryLine,
   VictoryTheme,
 } from "victory-native";
+import * as S from "./styles";
 
 export const Graphic = (props: GraphicProps) => {
   function renderGraphic() {
@@ -41,8 +42,18 @@ export const Graphic = (props: GraphicProps) => {
   }
 
   return (
-    <VictoryChart theme={VictoryTheme.material} domainPadding={{ x: 20 }}>
-      {renderGraphic()}
-    </VictoryChart>
+    <>
+      <VictoryChart theme={VictoryTheme.material} domainPadding={{ x: 20 }}>
+        {renderGraphic()}
+      </VictoryChart>
+      <S.ContainerSubtitle>
+        <S.TextPosition>Eixo Y:</S.TextPosition>
+        <S.Subtitle>{props?.positionY}</S.Subtitle>
+      </S.ContainerSubtitle>
+      <S.ContainerSubtitle>
+        <S.TextPosition>Eixo X:</S.TextPosition>
+        <S.Subtitle>{props?.positionX}</S.Subtitle>
+      </S.ContainerSubtitle>
+    </>
   );
 };

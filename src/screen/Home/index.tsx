@@ -9,6 +9,7 @@ import co2 from "../../assets/svgs/co2.svg";
 import kwh from "../../assets/svgs/kwh.svg";
 import tree from "../../assets/svgs/tree.svg";
 import * as S from "./styles";
+import { Tabs } from "../../components/Tabs";
 
 export const Home = () => {
   const [data, setData] = useState<DataProps>();
@@ -21,9 +22,23 @@ export const Home = () => {
 
   const RenderGraphic = () => {
     if (!showGraphic) {
-      return <Graphic type="line" dataGraphic={dataGraphic} />;
+      return (
+        <Graphic
+          type="line"
+          dataGraphic={dataGraphic}
+          positionX="Horas"
+          positionY="Kwh"
+        />
+      );
     } else {
-      return <Graphic type="bar" dataGraphic={dataGraphic} />;
+      return (
+        <Graphic
+          type="bar"
+          dataGraphic={dataGraphic}
+          positionX="Horas"
+          positionY="Kwh"
+        />
+      );
     }
   };
 
@@ -76,25 +91,17 @@ export const Home = () => {
           />
           <InfoDetails
             image={kwh}
-            value={data?.data?.totals?.kwh}
+            value={data?.data?.totals?.kwh?.toFixed(2)}
             description="Kwh"
           />
         </S.ContainerInfoDetails>
         <S.TitleGraphic>Desempenho em horas:</S.TitleGraphic>
-        <S.ContainerTabs>
-          <S.ButtonGraphicLine
-            onPress={() => setShowGraphic(false)}
-            border={showGraphic}
-          >
-            <S.TextButton>Linhas</S.TextButton>
-          </S.ButtonGraphicLine>
-          <S.ButtonGraphicBar
-            onPress={() => setShowGraphic(true)}
-            border={showGraphic}
-          >
-            <S.TextButton>Barras</S.TextButton>
-          </S.ButtonGraphicBar>
-        </S.ContainerTabs>
+        <Tabs
+          onPress={() =>
+            !showGraphic ? setShowGraphic(true) : setShowGraphic(false)
+          }
+          showGraphic={showGraphic}
+        />
         <S.ContainerGraphicLine>
           {!data ? (
             <>

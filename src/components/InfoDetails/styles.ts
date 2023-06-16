@@ -5,8 +5,8 @@ import fonts from "../../utils/fonts";
 export const Container = styled.View`
   flex-direction: column;
   align-items: center;
-  margin-left: 12px;
-  margin-right: 12px;
+  margin-left: 20px;
+  margin-right: 20px;
 `;
 
 export const ContainerIcon = styled.View`
@@ -25,8 +25,8 @@ export const Value = styled.Text`
 
 export const ContainerValue = styled.View`
   background-color: ${colors.green};
-  padding: 5px 0;
-  width: 70px;
+  padding: 7px 0;
+  min-width: 83px;
   border-radius: 50px;
   align-items: center;
 `;
