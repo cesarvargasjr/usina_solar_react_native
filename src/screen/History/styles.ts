@@ -4,7 +4,7 @@ import colors from "../../utils/colors";
 
 export const ContainerScreen = styled.ScrollView`
   height: 100%;
-  padding: 6% 4% 0 4%;
+  padding: 4% 4% 0 4%;
   background-color: ${colors.white};
 `;
 
@@ -13,6 +13,21 @@ export const TextSelect = styled.Text`
   font-family: ${fonts.semiBold};
   color: ${colors.blackLight};
   margin-right: 5px;
+`;
+
+export const TextMonthSelected = styled.Text`
+  font-size: 16px;
+  font-family: ${fonts.semiBold};
+  color: ${colors.blackLight};
+  margin-right: 5px;
+`;
+
+export const MonthSelected = styled.Text`
+  font-size: 16px;
+  font-family: ${fonts.regular};
+  color: ${colors.blackLight};
+  margin-right: 5px;
+  text-transform: capitalize;
 `;
 
 export const Background = styled.View`
@@ -24,10 +39,10 @@ export const Background = styled.View`
 
 export const ContainerDropDown = styled.ScrollView`
   position: absolute;
-  width: 120px;
+  width: 200px;
   border-radius: 8px;
   padding: 15px 20px 0 10px;
-  top: 60px;
+  top: 54px;
   left: 205px;
   z-index: 99999;
   flex-direction: column;
@@ -45,11 +60,11 @@ export const Option = styled.Text`
 export const ContainerSelect = styled.View`
   flex-direction: row;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 25px;
 `;
 
 export const ButtonSelect = styled.TouchableOpacity`
-  width: 120px;
+  width: 200px;
   border-radius: 8px;
   padding: 6px 10px;
   background-color: ${colors.green};
@@ -69,6 +84,12 @@ export const TextLoading = styled.Text`
   font-family: ${fonts.regular};
   color: ${colors.grey};
   margin-top: 8px;
+`;
+
+export const ContainerLoading = styled.View`
+  min-height: 393px;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const ContainerGraphic = styled.View`
@@ -91,5 +112,11 @@ export const TextInfoDetails = styled.Text`
   font-size: 20px;
   font-family: ${fonts.semiBold};
   color: ${colors.blackLight};
-  margin-top: 25px;
+  margin-top: 35px;
+`;
+
+export const ContainerMonth = styled.View`
+  position: absolute;
+  top: 45px;
+  flex-direction: row;
 `;

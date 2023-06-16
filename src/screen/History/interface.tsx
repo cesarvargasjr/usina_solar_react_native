@@ -9,6 +9,6 @@ export interface DataProps {
       percentage: number;
       trees: number;
     };
-    x_labels: [];
+    x_labels: any;
   };
 }
