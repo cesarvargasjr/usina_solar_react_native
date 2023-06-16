@@ -12,6 +12,7 @@ export const TitleGraphic = styled.Text`
   font-size: 20px;
   font-family: ${fonts.semiBold};
   color: ${colors.blackLight};
+  margin-bottom: 10px;
 `;
 
 export const Text = styled.Text`
@@ -48,8 +49,8 @@ export const ContainerGraphic = styled.View`
 export const ContainerGraphicLine = styled.View`
   width: 100%;
   height: 250px;
-  margin-bottom: 100px;
-  margin-top: 30px;
+  margin-bottom: 150px;
+  margin-top: 50px;
   align-items: center;
   justify-content: center;
 `;
@@ -68,43 +69,4 @@ export const Background = styled.View`
   width: 100%;
   z-index: 9;
   position: absolute;
-`;
-
-
-
-
-
-export const TextButton = styled.Text`
-  color: ${colors.green};
-  font-size: 21px;
-  font-family: ${fonts.semiBold};
-  width: 100%;
-  text-align: center;
-`;
-
-export const ButtonGraphicLine = styled.TouchableOpacity<{ border: boolean }>`
-  border-bottom-width: 2px solid;
-  border-color: ${({ border }) => border ? colors.white : colors.green};
-  padding-bottom: 4px;
-  width: 100px;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const ButtonGraphicBar = styled.TouchableOpacity<{ border: boolean }>`
-  border-bottom-width: 2px solid;
-  border-color: ${({ border }) => border ? colors.green : colors.white};
-  padding-bottom: 4px;
-  width: 100px;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const ContainerTabs = styled.View`
-  flex-direction: row;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  margin-top: 20px;
-  margin-bottom: 15px;
 `;

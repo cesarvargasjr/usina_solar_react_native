@@ -1,5 +1,5 @@
 export interface InfoDetailsProps {
   image?: any;
-  value?: number;
+  value?: any;
   description?: string;
 }
