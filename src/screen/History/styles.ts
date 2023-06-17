@@ -60,7 +60,7 @@ export const Option = styled.Text`
 export const ContainerSelect = styled.View`
   flex-direction: row;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 30px;
 `;
 
 export const ButtonSelect = styled.TouchableOpacity`
@@ -97,7 +97,7 @@ export const ContainerGraphic = styled.View`
   align-items: center;
   justify-content: center;
   margin-top: -20px;
-  padding-left: 25px;
+  padding-left: 30px;
 `;
 
 export const ContainerInfoDetails = styled.View`
@@ -119,4 +119,9 @@ export const ContainerMonth = styled.View`
   position: absolute;
   top: 45px;
   flex-direction: row;
+`;
+
+export const ContainerText = styled.View`
+  flex-direction: row;
+  margin-top: 5px;
 `;

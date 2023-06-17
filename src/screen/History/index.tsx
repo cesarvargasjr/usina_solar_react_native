@@ -5,6 +5,7 @@ import { Graphic } from "../../components/Graphics";
 import { DataProps } from "./interface";
 import { Tabs } from "../../components/Tabs";
 import { InfoDetails } from "../../components/InfoDetails";
+import { calculateAverage } from "../../utils/calculateAverage";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import colors from "../../utils/colors";
 import co2 from "../../assets/svgs/co2.svg";
@@ -98,53 +99,53 @@ export const History = () => {
         5,
         7
       )}/${data?.data?.x_labels[7]?.slice(0, 4)}`,
-      y: data?.data?.generation[7],
+      y: data?.data?.generation[7] ?? 0,
     },
     {
       x: `${data?.data?.x_labels[8]?.slice(
         5,
         7
       )}/${data?.data?.x_labels[8]?.slice(0, 4)}`,
-      y: data?.data?.generation[8],
+      y: data?.data?.generation[8] ?? 0,
     },
     {
       x: `${data?.data?.x_labels[9]?.slice(
         5,
         7
       )}/${data?.data?.x_labels[9]?.slice(0, 4)}`,
-      y: data?.data?.generation[9],
+      y: data?.data?.generation[9] ?? 0,
     },
     {
       x: `${data?.data?.x_labels[10]?.slice(
         5,
         7
       )}/${data?.data?.x_labels[10]?.slice(0, 4)}`,
-      y: data?.data?.generation[10],
+      y: data?.data?.generation[10] ?? 0,
     },
     {
       x: `${data?.data?.x_labels[11]?.slice(
         5,
         7
       )}/${data?.data?.x_labels[11]?.slice(0, 4)}`,
-      y: data?.data?.generation[11],
+      y: data?.data?.generation[11] ?? 0,
     },
     {
       x: `${data?.data?.x_labels[12]?.slice(
         5,
         7
       )}/${data?.data?.x_labels[12]?.slice(0, 4)}`,
-      y: data?.data?.generation[12],
+      y: data?.data?.generation[12] ?? 0,
     },
   ];
 
   const graphicMonthly = [
-    { x: "01", y: data?.data?.generation[0] },
-    { x: "05", y: data?.data?.generation[4] },
-    { x: "10", y: data?.data?.generation[9] },
-    { x: "15", y: data?.data?.generation[14] },
-    { x: "20", y: data?.data?.generation[19] },
-    { x: "25", y: data?.data?.generation[24] },
-    { x: "30", y: data?.data?.generation[28] },
+    { x: "01", y: data?.data?.generation[0] ?? 0 },
+    { x: "05", y: data?.data?.generation[4] ?? 0 },
+    { x: "10", y: data?.data?.generation[9] ?? 0 },
+    { x: "15", y: data?.data?.generation[14] ?? 0 },
+    { x: "20", y: data?.data?.generation[19] ?? 0 },
+    { x: "25", y: data?.data?.generation[24] ?? 0 },
+    { x: "30", y: data?.data?.generation[28] ?? 0 },
   ];
 
   const graphicLastYears = [
@@ -216,6 +217,20 @@ export const History = () => {
             <S.MonthSelected>{lastMonth}</S.MonthSelected>
           </S.ContainerMonth>
         )}
+        <S.ContainerText>
+          <S.TextMonthSelected>
+            Expectativa{" "}
+            {periodGraphic === "daily"
+              ? "diária"
+              : periodGraphic === "monthly"
+              ? "mensal"
+              : "anual"}
+            :
+          </S.TextMonthSelected>
+          <S.MonthSelected>
+            {calculateAverage(data?.data?.expected).toFixed(2)} Kwh
+          </S.MonthSelected>
+        </S.ContainerText>
         <Tabs
           onPress={() =>
             !showGraphic ? setShowGraphic(true) : setShowGraphic(false)
