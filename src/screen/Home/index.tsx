@@ -58,60 +58,70 @@ export const Home = () => {
     <>
       <S.ContainerScreen>
         <S.TitleGraphic>Energia gerada no dia de hoje:</S.TitleGraphic>
-        <S.Container>
-          <S.ContainerText>
-            <S.Text>Expectativa:</S.Text>
-            <S.Text>{data?.data?.expected} Kwh</S.Text>
-          </S.ContainerText>
-          <S.ContainerText>
-            <S.Text>Realidade:</S.Text>
-            <S.Text>{data?.data?.totals?.kwh.toFixed(3)} Kwh</S.Text>
-          </S.ContainerText>
-        </S.Container>
-        <S.ContainerGraphic>
-          {!data ? (
-            <>
-              <ActivityIndicator />
-              <S.TextLoading>Carregando gráfico</S.TextLoading>
-            </>
-          ) : (
-            <CircleGraphic value={data?.data?.totals?.percentage} />
-          )}
-        </S.ContainerGraphic>
-        <S.ContainerInfoDetails>
-          <InfoDetails
-            image={co2}
-            value={data?.data?.totals?.co2}
-            description="Carbono evitado"
-          />
-          <InfoDetails
-            image={tree}
-            value={data?.data?.totals?.trees}
-            description="Árvores salvas"
-          />
-          <InfoDetails
-            image={kwh}
-            value={data?.data?.totals?.kwh?.toFixed(2)}
-            description="Kwh"
-          />
-        </S.ContainerInfoDetails>
-        <S.TitleGraphic>Desempenho em horas:</S.TitleGraphic>
-        <Tabs
-          onPress={() =>
-            !showGraphic ? setShowGraphic(true) : setShowGraphic(false)
-          }
-          showGraphic={showGraphic}
-        />
-        <S.ContainerGraphicLine>
-          {!data ? (
-            <>
-              <ActivityIndicator />
-              <S.TextLoading>Carregando gráfico</S.TextLoading>
-            </>
-          ) : (
-            <RenderGraphic />
-          )}
-        </S.ContainerGraphicLine>
+        {!data ? (
+          <S.ContainerLoading>
+            <S.TextRequest>
+              Desculpe, houve um erro ao buscar as informações.
+            </S.TextRequest>
+          </S.ContainerLoading>
+        ) : (
+          <>
+            <S.Container>
+              <S.ContainerText>
+                <S.Text>Expectativa:</S.Text>
+                <S.Text>{data?.data?.expected} Kwh</S.Text>
+              </S.ContainerText>
+              <S.ContainerText>
+                <S.Text>Realidade:</S.Text>
+                <S.Text>{data?.data?.totals?.kwh.toFixed(3)} Kwh</S.Text>
+              </S.ContainerText>
+            </S.Container>
+            <S.ContainerGraphic>
+              {!data ? (
+                <>
+                  <ActivityIndicator />
+                  <S.TextLoading>Carregando gráfico</S.TextLoading>
+                </>
+              ) : (
+                <CircleGraphic value={data?.data?.totals?.percentage} />
+              )}
+            </S.ContainerGraphic>
+            <S.ContainerInfoDetails>
+              <InfoDetails
+                image={co2}
+                value={data?.data?.totals?.co2}
+                description="Carbono evitado"
+              />
+              <InfoDetails
+                image={tree}
+                value={data?.data?.totals?.trees}
+                description="Árvores salvas"
+              />
+              <InfoDetails
+                image={kwh}
+                value={data?.data?.totals?.kwh?.toFixed(2)}
+                description="Kwh"
+              />
+            </S.ContainerInfoDetails>
+            <S.TitleGraphic>Desempenho por hora:</S.TitleGraphic>
+            <Tabs
+              onPress={() =>
+                !showGraphic ? setShowGraphic(true) : setShowGraphic(false)
+              }
+              showGraphic={showGraphic}
+            />
+            <S.ContainerGraphicLine>
+              {!data ? (
+                <>
+                  <ActivityIndicator />
+                  <S.TextLoading>Carregando gráfico</S.TextLoading>
+                </>
+              ) : (
+                <RenderGraphic />
+              )}
+            </S.ContainerGraphicLine>
+          </>
+        )}
       </S.ContainerScreen>
     </>
   );

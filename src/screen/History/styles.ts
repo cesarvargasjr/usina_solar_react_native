@@ -86,10 +86,18 @@ export const TextLoading = styled.Text`
   margin-top: 8px;
 `;
 
+export const TextRequest = styled.Text`
+  font-size: 21px;
+  font-family: ${fonts.bold};
+  color: ${colors.grey};
+  width: 100%;
+  text-align: center;
+`;
+
 export const ContainerLoading = styled.View`
-  min-height: 393px;
+  min-height: 100%;
   align-items: center;
-  justify-content: center;
+  margin-top: 300px;
 `;
 
 export const ContainerGraphic = styled.View`

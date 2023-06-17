@@ -4,6 +4,7 @@ import { LogBox } from "react-native";
 import { StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { NativeBaseProvider } from "native-base";
+import { AnimateProvider } from "./src/context/Animate";
 
 import {
   Roboto_400Regular,
@@ -29,12 +30,28 @@ export default function App() {
     return null;
   }
 
+  const composeProviders =
+    (
+      ...providers: {
+        ({ children }: any): JSX.Element;
+      }[]
+    ) =>
+    (props: { children: any }) =>
+      providers.reduceRight(
+        (children, Provider) => <Provider {...props}>{children}</Provider>,
+        props.children
+      );
+
+  const AllProviders = composeProviders(AnimateProvider);
+
   return (
-    <NavigationContainer>
-      <NativeBaseProvider>
-        <StatusBar barStyle="dark-content" />
-        <AppRoutes />
-      </NativeBaseProvider>
-    </NavigationContainer>
+    <AllProviders>
+      <NavigationContainer>
+        <NativeBaseProvider>
+          <StatusBar barStyle="dark-content" />
+          <AppRoutes />
+        </NativeBaseProvider>
+      </NavigationContainer>
+    </AllProviders>
   );
 }
