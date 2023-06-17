@@ -62,6 +62,8 @@ Este projeto é compatível com as plataformas Android e IOS, no entanto, neste 
 
 <p align="center">
 
+<img width="277" alt="image" src="https://github.com/cesarvargasjr/usina_solar_react_native/assets/72532360/ebfd1842-e083-48e8-8928-e6e3d9063763">
+
 </p>
 
 ##
