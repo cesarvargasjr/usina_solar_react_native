@@ -66,8 +66,20 @@ Este projeto é compatível com as plataformas Android e IOS, no entanto, neste 
 
 ##
 
-### Screenshot da aplicação:
+### Demonstração da aplicação:
 
 <p align="center">
+
+<img width="350" alt="image" src="https://github.com/cesarvargasjr/usina_solar_react_native/assets/72532360/9b456317-97e0-4173-acd5-50545aa78a43">
+
+<img width="354" alt="image" src="https://github.com/cesarvargasjr/usina_solar_react_native/assets/72532360/df4a2e20-6081-4fd6-a5b6-0b6211ccc71a">
+
+<img width="353" alt="image" src="https://github.com/cesarvargasjr/usina_solar_react_native/assets/72532360/e697cbc1-5f03-4494-97c6-6ebd930fecad">
+
+<img width="353" alt="image" src="https://github.com/cesarvargasjr/usina_solar_react_native/assets/72532360/d5bc9ac7-0641-4f7e-8407-b7140416379e">
+
+<img width="353" alt="image" src="https://github.com/cesarvargasjr/usina_solar_react_native/assets/72532360/d7d57370-3cf0-4ee6-ad3f-b4b2ee00cb2a">
+
+<img width="356" alt="image" src="https://github.com/cesarvargasjr/usina_solar_react_native/assets/72532360/493f4654-3e70-4ce1-a290-630d9a8a08e7">
 
 </p>
