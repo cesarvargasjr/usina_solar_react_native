@@ -79,13 +79,6 @@ export const TextOption = styled.Text`
   color: ${colors.white};
 `;
 
-export const TextLoading = styled.Text`
-  font-size: 14px;
-  font-family: ${fonts.regular};
-  color: ${colors.grey};
-  margin-top: 8px;
-`;
-
 export const TextRequest = styled.Text`
   font-size: 21px;
   font-family: ${fonts.bold};

@@ -224,8 +224,7 @@ export const History = () => {
         </S.ContainerSelect>
         {loading ? (
           <S.ContainerLoading>
-            <ActivityIndicator />
-            <S.TextLoading>Carregando...</S.TextLoading>
+            <ActivityIndicator size={"large"} color={colors.green} />
           </S.ContainerLoading>
         ) : (
           <>
