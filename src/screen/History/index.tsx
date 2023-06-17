@@ -6,6 +6,9 @@ import { DataProps } from "./interface";
 import { Tabs } from "../../components/Tabs";
 import { InfoDetails } from "../../components/InfoDetails";
 import { calculateAverage } from "../../utils/calculateAverage";
+import { lazyLoad } from "../../utils/lazyLoad";
+import { arrayPeiods } from "../../utils/arrayPeriods";
+import { useAnimate } from "../../context/Animate";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import colors from "../../utils/colors";
 import co2 from "../../assets/svgs/co2.svg";
@@ -14,14 +17,30 @@ import tree from "../../assets/svgs/tree.svg";
 import * as S from "./styles";
 
 export const History = () => {
+  const { setAnimate } = useAnimate();
   const [data, setData] = useState<DataProps>();
   const [showDropdown, setShowDropdown] = useState(false);
   const [periodGraphic, setPeriodGraphic] = useState("daily");
   const [showGraphic, setShowGraphic] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const currentMonth = new Date();
+  currentMonth.setMonth(currentMonth.getMonth() - 1);
+  const lastMonth = currentMonth.toLocaleString("default", { month: "long" });
 
   const handleDataGraphic = async () => {
+    setLoading(true);
+    await lazyLoad(500);
     const response = await getSolarPlant(periodGraphic);
     setData(response);
+    setLoading(false);
+  };
+
+  const handleFilter = (period: string) => {
+    setPeriodGraphic(period),
+      setShowDropdown(false),
+      setShowGraphic(false),
+      setAnimate(true);
   };
 
   function RenderGraphic() {
@@ -46,6 +65,7 @@ export const History = () => {
             )}
           </>
         );
+        break;
       case "monthly":
         return (
           <>
@@ -66,6 +86,7 @@ export const History = () => {
             )}
           </>
         );
+        break;
       case "yearly":
         return (
           <>
@@ -86,12 +107,9 @@ export const History = () => {
             )}
           </>
         );
+        break;
     }
   }
-
-  useEffect(() => {
-    handleDataGraphic();
-  }, [periodGraphic]);
 
   const graphicSixMonths = [
     {
@@ -151,21 +169,21 @@ export const History = () => {
   const graphicLastYears = [
     {
       x: `${data?.data?.x_labels[0]?.slice(0, 4)}`,
-      y: data?.data?.generation[0],
+      y: data?.data?.generation[0] ?? 0,
     },
     {
       x: `${data?.data?.x_labels[1]?.slice(0, 4)}`,
-      y: data?.data?.generation[1],
+      y: data?.data?.generation[1] ?? 0,
     },
     {
       x: `${data?.data?.x_labels[2]?.slice(0, 4)}`,
-      y: data?.data?.generation[2],
+      y: data?.data?.generation[2] ?? 0,
     },
   ];
 
-  const currentMonth = new Date();
-  currentMonth.setMonth(currentMonth.getMonth() - 1);
-  const lastMonth = currentMonth.toLocaleString("default", { month: "long" });
+  useEffect(() => {
+    handleDataGraphic();
+  }, [periodGraphic]);
 
   return (
     <>
@@ -174,29 +192,22 @@ export const History = () => {
       )}
       {showDropdown && (
         <S.ContainerDropDown>
-          <TouchableOpacity
-            onPress={() => (setPeriodGraphic("daily"), setShowDropdown(false))}
-          >
-            <S.Option>Último Mês</S.Option>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => (
-              setPeriodGraphic("monthly"), setShowDropdown(false)
-            )}
-          >
-            <S.Option>Últimos 6 meses</S.Option>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => (setPeriodGraphic("yearly"), setShowDropdown(false))}
-          >
-            <S.Option>Últimos anos</S.Option>
-          </TouchableOpacity>
+          {arrayPeiods?.map((item) => (
+            <TouchableOpacity
+              key={item?.period}
+              onPress={() => handleFilter(item?.period)}
+            >
+              <S.Option>{item?.name}</S.Option>
+            </TouchableOpacity>
+          ))}
         </S.ContainerDropDown>
       )}
       <S.ContainerScreen>
         <S.ContainerSelect>
           <S.TextSelect>Selecione o período:</S.TextSelect>
-          <S.ButtonSelect onPress={() => setShowDropdown(true)}>
+          <S.ButtonSelect
+            onPress={() => (setShowDropdown(true), setAnimate(false))}
+          >
             <S.TextOption>
               {periodGraphic === "daily"
                 ? "Último Mês"
@@ -211,60 +222,80 @@ export const History = () => {
             )}
           </S.ButtonSelect>
         </S.ContainerSelect>
-        {periodGraphic === "daily" && (
-          <S.ContainerMonth>
-            <S.TextMonthSelected>Último mês:</S.TextMonthSelected>
-            <S.MonthSelected>{lastMonth}</S.MonthSelected>
-          </S.ContainerMonth>
+        {loading ? (
+          <S.ContainerLoading>
+            <ActivityIndicator />
+            <S.TextLoading>Carregando...</S.TextLoading>
+          </S.ContainerLoading>
+        ) : (
+          <>
+            {!data ? (
+              <S.ContainerLoading>
+                <S.TextRequest>
+                  Não foi possível realizar a sua pesquisa. Tente novamente!
+                </S.TextRequest>
+              </S.ContainerLoading>
+            ) : (
+              <>
+                {periodGraphic === "daily" && (
+                  <S.ContainerMonth>
+                    <S.TextMonthSelected>Último mês:</S.TextMonthSelected>
+                    <S.MonthSelected>{lastMonth}</S.MonthSelected>
+                  </S.ContainerMonth>
+                )}
+                <S.ContainerText>
+                  <S.TextMonthSelected>
+                    Expectativa{" "}
+                    {periodGraphic === "daily"
+                      ? "diária"
+                      : periodGraphic === "monthly"
+                      ? "mensal"
+                      : "anual"}
+                    :
+                  </S.TextMonthSelected>
+                  <S.MonthSelected>
+                    {calculateAverage(data?.data?.expected).toFixed(2)} Kwh
+                  </S.MonthSelected>
+                </S.ContainerText>
+                <Tabs
+                  onPress={() =>
+                    !showGraphic ? setShowGraphic(true) : setShowGraphic(false)
+                  }
+                  showGraphic={showGraphic}
+                />
+                <S.ContainerGraphic>
+                  <RenderGraphic />
+                </S.ContainerGraphic>
+                <S.TextInfoDetails>
+                  Histórico total{" "}
+                  {periodGraphic === "daily"
+                    ? "do último Mês"
+                    : periodGraphic === "monthly"
+                    ? "dos últimos 6 meses"
+                    : "dos últimos anos"}
+                  :
+                </S.TextInfoDetails>
+                <S.ContainerInfoDetails>
+                  <InfoDetails
+                    image={co2}
+                    value={data?.data?.totals?.co2}
+                    description="Carbono evitado"
+                  />
+                  <InfoDetails
+                    image={tree}
+                    value={data?.data?.totals?.trees}
+                    description="Árvores salvas"
+                  />
+                  <InfoDetails
+                    image={kwh}
+                    value={data?.data?.totals?.kwh?.toFixed(2)}
+                    description="Kwh"
+                  />
+                </S.ContainerInfoDetails>
+              </>
+            )}
+          </>
         )}
-        <S.ContainerText>
-          <S.TextMonthSelected>
-            Expectativa{" "}
-            {periodGraphic === "daily"
-              ? "diária"
-              : periodGraphic === "monthly"
-              ? "mensal"
-              : "anual"}
-            :
-          </S.TextMonthSelected>
-          <S.MonthSelected>
-            {calculateAverage(data?.data?.expected).toFixed(2)} Kwh
-          </S.MonthSelected>
-        </S.ContainerText>
-        <Tabs
-          onPress={() =>
-            !showGraphic ? setShowGraphic(true) : setShowGraphic(false)
-          }
-          showGraphic={showGraphic}
-        />
-        <S.ContainerGraphic>
-          {!data ? (
-            <S.ContainerLoading>
-              <ActivityIndicator />
-              <S.TextLoading>Carregando gráfico</S.TextLoading>
-            </S.ContainerLoading>
-          ) : (
-            <RenderGraphic />
-          )}
-        </S.ContainerGraphic>
-        <S.TextInfoDetails>Histórico total:</S.TextInfoDetails>
-        <S.ContainerInfoDetails>
-          <InfoDetails
-            image={co2}
-            value={data?.data?.totals?.co2}
-            description="Carbono evitado"
-          />
-          <InfoDetails
-            image={tree}
-            value={data?.data?.totals?.trees}
-            description="Árvores salvas"
-          />
-          <InfoDetails
-            image={kwh}
-            value={data?.data?.totals?.kwh?.toFixed(2)}
-            description="Kwh"
-          />
-        </S.ContainerInfoDetails>
       </S.ContainerScreen>
     </>
   );

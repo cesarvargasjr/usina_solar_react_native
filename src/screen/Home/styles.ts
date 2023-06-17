@@ -70,3 +70,17 @@ export const Background = styled.View`
   z-index: 9;
   position: absolute;
 `;
+
+export const ContainerLoading = styled.View`
+  min-height: 100%;
+  align-items: center;
+  margin-top: 300px;
+`;
+
+export const TextRequest = styled.Text`
+font-size: 21px;
+font-family: ${fonts.bold};
+color: ${colors.grey};
+width: 100%;
+text-align: center;
+`;
