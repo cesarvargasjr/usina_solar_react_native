@@ -43,7 +43,10 @@ export const Graphic = (props: GraphicProps) => {
 
   return (
     <>
-      <VictoryChart theme={VictoryTheme.material} domainPadding={{ x: 20 }}>
+      <VictoryChart
+        theme={VictoryTheme.material}
+        domainPadding={{ x: 10, y: 12 }}
+      >
         {renderGraphic()}
       </VictoryChart>
       <S.ContainerSubtitle>

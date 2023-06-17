@@ -5,6 +5,7 @@ import { Graphic } from "../../components/Graphics";
 import { DataProps } from "./interface";
 import { Tabs } from "../../components/Tabs";
 import { InfoDetails } from "../../components/InfoDetails";
+import { calculateAverage } from "../../utils/calculateAverage";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import colors from "../../utils/colors";
 import co2 from "../../assets/svgs/co2.svg";
@@ -51,15 +52,35 @@ export const History = () => {
             {!showGraphic ? (
               <Graphic
                 type="line"
-                dataGraphic={graphicYearly}
-                positionX="Meses"
+                dataGraphic={graphicSixMonths}
+                positionX="Mês/Ano"
                 positionY="Kwh"
               />
             ) : (
               <Graphic
                 type="bar"
-                dataGraphic={graphicYearly}
-                positionX="Meses"
+                dataGraphic={graphicSixMonths}
+                positionX="Mês/Ano"
+                positionY="Kwh"
+              />
+            )}
+          </>
+        );
+      case "yearly":
+        return (
+          <>
+            {!showGraphic ? (
+              <Graphic
+                type="line"
+                dataGraphic={graphicLastYears}
+                positionX="Ano"
+                positionY="Kwh"
+              />
+            ) : (
+              <Graphic
+                type="bar"
+                dataGraphic={graphicLastYears}
+                positionX="Ano"
                 positionY="Kwh"
               />
             )}
@@ -72,24 +93,79 @@ export const History = () => {
     handleDataGraphic();
   }, [periodGraphic]);
 
-  const graphicYearly = [
-    { x: "Jan", y: data?.data?.generation[0] },
-    { x: "Mar", y: data?.data?.generation[2] },
-    { x: "Mai", y: data?.data?.generation[4] },
-    { x: "Jul", y: data?.data?.generation[6] },
-    { x: "Set", y: data?.data?.generation[8] },
-    { x: "Nov", y: data?.data?.generation[10] },
+  const graphicSixMonths = [
+    {
+      x: `${data?.data?.x_labels[7]?.slice(
+        5,
+        7
+      )}/${data?.data?.x_labels[7]?.slice(0, 4)}`,
+      y: data?.data?.generation[7] ?? 0,
+    },
+    {
+      x: `${data?.data?.x_labels[8]?.slice(
+        5,
+        7
+      )}/${data?.data?.x_labels[8]?.slice(0, 4)}`,
+      y: data?.data?.generation[8] ?? 0,
+    },
+    {
+      x: `${data?.data?.x_labels[9]?.slice(
+        5,
+        7
+      )}/${data?.data?.x_labels[9]?.slice(0, 4)}`,
+      y: data?.data?.generation[9] ?? 0,
+    },
+    {
+      x: `${data?.data?.x_labels[10]?.slice(
+        5,
+        7
+      )}/${data?.data?.x_labels[10]?.slice(0, 4)}`,
+      y: data?.data?.generation[10] ?? 0,
+    },
+    {
+      x: `${data?.data?.x_labels[11]?.slice(
+        5,
+        7
+      )}/${data?.data?.x_labels[11]?.slice(0, 4)}`,
+      y: data?.data?.generation[11] ?? 0,
+    },
+    {
+      x: `${data?.data?.x_labels[12]?.slice(
+        5,
+        7
+      )}/${data?.data?.x_labels[12]?.slice(0, 4)}`,
+      y: data?.data?.generation[12] ?? 0,
+    },
   ];
 
   const graphicMonthly = [
-    { x: "01", y: data?.data?.generation[0] },
-    { x: "05", y: data?.data?.generation[4] },
-    { x: "10", y: data?.data?.generation[9] },
-    { x: "15", y: data?.data?.generation[14] },
-    { x: "20", y: data?.data?.generation[19] },
-    { x: "25", y: data?.data?.generation[24] },
-    { x: "30", y: data?.data?.generation[28] },
+    { x: "01", y: data?.data?.generation[0] ?? 0 },
+    { x: "05", y: data?.data?.generation[4] ?? 0 },
+    { x: "10", y: data?.data?.generation[9] ?? 0 },
+    { x: "15", y: data?.data?.generation[14] ?? 0 },
+    { x: "20", y: data?.data?.generation[19] ?? 0 },
+    { x: "25", y: data?.data?.generation[24] ?? 0 },
+    { x: "30", y: data?.data?.generation[28] ?? 0 },
   ];
+
+  const graphicLastYears = [
+    {
+      x: `${data?.data?.x_labels[0]?.slice(0, 4)}`,
+      y: data?.data?.generation[0],
+    },
+    {
+      x: `${data?.data?.x_labels[1]?.slice(0, 4)}`,
+      y: data?.data?.generation[1],
+    },
+    {
+      x: `${data?.data?.x_labels[2]?.slice(0, 4)}`,
+      y: data?.data?.generation[2],
+    },
+  ];
+
+  const currentMonth = new Date();
+  currentMonth.setMonth(currentMonth.getMonth() - 1);
+  const lastMonth = currentMonth.toLocaleString("default", { month: "long" });
 
   return (
     <>
@@ -101,14 +177,19 @@ export const History = () => {
           <TouchableOpacity
             onPress={() => (setPeriodGraphic("daily"), setShowDropdown(false))}
           >
-            <S.Option>Mensal</S.Option>
+            <S.Option>Último Mês</S.Option>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => (
               setPeriodGraphic("monthly"), setShowDropdown(false)
             )}
           >
-            <S.Option>Anual</S.Option>
+            <S.Option>Últimos 6 meses</S.Option>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => (setPeriodGraphic("yearly"), setShowDropdown(false))}
+          >
+            <S.Option>Últimos anos</S.Option>
           </TouchableOpacity>
         </S.ContainerDropDown>
       )}
@@ -117,7 +198,11 @@ export const History = () => {
           <S.TextSelect>Selecione o período:</S.TextSelect>
           <S.ButtonSelect onPress={() => setShowDropdown(true)}>
             <S.TextOption>
-              {periodGraphic === "daily" ? "Mensal" : "Anual"}
+              {periodGraphic === "daily"
+                ? "Último Mês"
+                : periodGraphic === "monthly"
+                ? "Últimos 6 meses"
+                : "Últimos anos"}
             </S.TextOption>
             {!showDropdown ? (
               <Ionicons name="arrow-down" size={20} color={colors.white} />
@@ -126,6 +211,26 @@ export const History = () => {
             )}
           </S.ButtonSelect>
         </S.ContainerSelect>
+        {periodGraphic === "daily" && (
+          <S.ContainerMonth>
+            <S.TextMonthSelected>Último mês:</S.TextMonthSelected>
+            <S.MonthSelected>{lastMonth}</S.MonthSelected>
+          </S.ContainerMonth>
+        )}
+        <S.ContainerText>
+          <S.TextMonthSelected>
+            Expectativa{" "}
+            {periodGraphic === "daily"
+              ? "diária"
+              : periodGraphic === "monthly"
+              ? "mensal"
+              : "anual"}
+            :
+          </S.TextMonthSelected>
+          <S.MonthSelected>
+            {calculateAverage(data?.data?.expected).toFixed(2)} Kwh
+          </S.MonthSelected>
+        </S.ContainerText>
         <Tabs
           onPress={() =>
             !showGraphic ? setShowGraphic(true) : setShowGraphic(false)
@@ -134,11 +239,10 @@ export const History = () => {
         />
         <S.ContainerGraphic>
           {!data ? (
-            <>
-              <View style={{ marginTop: 100 }}></View>
+            <S.ContainerLoading>
               <ActivityIndicator />
               <S.TextLoading>Carregando gráfico</S.TextLoading>
-            </>
+            </S.ContainerLoading>
           ) : (
             <RenderGraphic />
           )}

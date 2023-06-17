@@ -4,7 +4,7 @@ import colors from "../../utils/colors";
 
 export const ContainerScreen = styled.ScrollView`
   height: 100%;
-  padding: 6% 4% 0 4%;
+  padding: 4% 4% 0 4%;
   background-color: ${colors.white};
 `;
 
@@ -60,8 +60,8 @@ export const ContainerInfoDetails = styled.View`
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  margin-top: 60px;
-  margin-bottom: 60px;
+  margin-top: 70px;
+  margin-bottom: 70px;
 `;
 
 export const Background = styled.View`
