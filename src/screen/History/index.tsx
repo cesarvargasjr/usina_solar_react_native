@@ -257,9 +257,8 @@ export const History = () => {
                   </S.MonthSelected>
                 </S.ContainerText>
                 <Tabs
-                  onPress={() =>
-                    !showGraphic ? setShowGraphic(true) : setShowGraphic(false)
-                  }
+                  tabOne={() => showGraphic && setShowGraphic(false)}
+                  tabTwo={() => !showGraphic && setShowGraphic(true)}
                   showGraphic={showGraphic}
                 />
                 <S.ContainerGraphic>
