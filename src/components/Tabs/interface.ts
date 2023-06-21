@@ -1,4 +1,5 @@
 export interface TabsProps {
-  onPress: () => void;
+  tabOne: () => void;
+  tabTwo: () => void;
   showGraphic: boolean;
 }

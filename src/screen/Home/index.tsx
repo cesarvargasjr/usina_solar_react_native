@@ -117,9 +117,8 @@ export const Home = () => {
                 </S.ContainerInfoDetails>
                 <S.TitleGraphic>Desempenho por hora:</S.TitleGraphic>
                 <Tabs
-                  onPress={() =>
-                    !showGraphic ? setShowGraphic(true) : setShowGraphic(false)
-                  }
+                  tabOne={() => showGraphic && setShowGraphic(false)}
+                  tabTwo={() => !showGraphic && setShowGraphic(true)}
                   showGraphic={showGraphic}
                 />
                 <S.ContainerGraphicLine>
