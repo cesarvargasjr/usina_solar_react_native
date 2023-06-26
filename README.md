@@ -56,18 +56,6 @@ $ expo start
 
 ##
 
-### QR Code para acessar o build da aplicação:
-
-Este projeto é compatível com as plataformas Android e IOS, no entanto, neste momento somente smartphones Android conseguirão navegar no aplicativo através deste QR Code. Caso queira acessar a aplicação em um smartphone IOS será necessário fazer o clone deste repositório e executar o projeto localmente conforme os passos indicados na seção anterior.
-
-<p align="center">
-
-<img width="277" alt="image" src="https://github.com/cesarvargasjr/usina_solar_react_native/assets/72532360/ebfd1842-e083-48e8-8928-e6e3d9063763">
-
-</p>
-
-##
-
 ### Demonstração da aplicação:
 
 <p align="center">
